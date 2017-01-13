@@ -6,12 +6,12 @@ const {
 } = require('path');
 const webpack = require('webpack');
 const path = require('path');
-
+const c9 = !!process.env.PORT;
 module.exports = {
     entry: {
         'index': [
             'react-hot-loader/patch',
-            'webpack-dev-server/client?http://127.0.0.1:9876',
+            `webpack-dev-server/client?${c9?'http://kityphoto-yeanzhi.c9users.io':'http://127.0.0.1:9876'}`,
             'webpack/hot/only-dev-server',
             './demo/index.js'
         ]
@@ -27,7 +27,7 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
-        port: 9876,
+        port: process.env.PORT||9876,
         host: "0.0.0.0",
         hot: true,
         inline: true,
