@@ -1,7 +1,7 @@
 {
-  "name": "xm-components",
+  "name": "kityphoto",
   "version": "0.0.1",
-  "description": "基础组件",
+  "description": "web 图片编辑器",
   "repository": "",
   "author": "yanzhi",
   "scripts": {

@@ -27,7 +27,7 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
-        port: process.env.PORT||9876,
+        port: parseInt(process.env.PORT) ||9876,
         host: "0.0.0.0",
         hot: true,
         inline: true,
