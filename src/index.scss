@@ -1,0 +1,36 @@
+#kity_svg_0{
+  display: inline-block;
+    path{
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+.kity-photo-mask{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 1000000;
+  input{
+    position: absolute;
+    box-sizing: inherit;
+    display: inline-block;
+    outline: none;
+    color: rgba(0,0,0,.870588);
+    cursor: auto;
+    font-style: inherit;
+    font-variant: inherit;
+    font-weight: inherit;
+    font-stretch: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: transparent;
+    min-width: 10px;
+    border-radius: 2px;
+    border: 1px solid #118bfb;
+    padding: 0;
+    margin: 0;
+  }
+}
