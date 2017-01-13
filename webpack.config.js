@@ -22,7 +22,7 @@ module.exports = {
         path: resolve(__dirname, 'dist'),
         publicPath: '/dist'
     },
-    devtool: 'cheap-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
 
     devServer: {
         contentBase: path.join(__dirname, "dist"),
@@ -55,7 +55,7 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'css-loader?modules',
+                    'css-loader',
                     'postcss-loader',
                 ],
             },
@@ -63,7 +63,7 @@ module.exports = {
                 test: /\.scss$/,
                 use: [
                     'style-loader',
-                    'css-loader?modules',
+                    'css-loader',
                     'postcss-loader',
                     'sass-loader'
                 ],

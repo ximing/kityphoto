@@ -3,7 +3,7 @@
  */
 'use strict';
 import 'babel-polyfill';
-import './index.scss';
+import './scss/index.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Main from './main';

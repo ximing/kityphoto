@@ -1,0 +1,426 @@
+.wrap_inner{
+  width: 700px;
+  height: 500px;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+  .main{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+    .upload-file-image-preview{
+      flex: 1;
+      box-sizing: border-box;
+      text-align: center;
+      vertical-align:baseline;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      img{
+        display: block;
+      }
+      #upload-file-image-preview-paper{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        box-sizing: border-box;
+        text-align: center;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        font-size: 0;
+        &:before{
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 0;
+          width: 0;
+          height: 100%;
+        }
+        svg{
+          vertical-align: middle;
+        }
+        image{
+          -moz-user-select: none;
+          -webkit-user-select: none;
+        }
+      }
+      .edit-photo-tools{
+        position: relative;
+        width: 110px;
+        box-sizing: border-box;
+        height: 424px;
+        .edit-photo-tools-thumb{
+          height: 130px;
+          width: 110px;
+          position: relative;
+          box-sizing: border-box;
+          .edit-photo-tools-thumb-view{
+            height: 100px;
+            width: 100px;
+            margin: 0 auto;
+            position: relative;
+            svg{
+              margin:auto;
+              position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+            }
+          }
+        }
+        .edit-photo-tools-body{
+          width: 110px;
+          box-sizing: border-box;
+        }
+        .edit-photo-tools-left{
+          box-sizing: border-box;
+          display: inline-block;
+          width: 70px;
+          position: relative;
+          li{
+            width: 30px;
+            height: 30px;
+            box-shadow:0 0 4px #49a4db;
+            margin: 20px auto;
+            cursor: pointer;
+            list-style: none;
+            background-image: url('/public/images/photoedit/draw.png');
+            background-color: #FFF;
+            background-repeat: no-repeat;
+            -webkit-transition: background-color 0.2s ease-in-out;
+          }
+          .draw{
+            background-position: -30px 0px;
+          }
+          .square{
+            background-position: -180px 0px;
+          }
+          .circle{
+            background-position: -210px 0px;
+          }
+          .text{
+            background-size: contain;
+            background-image: url('/public/images/photoedit/wenzi.png');
+          }
+          .line{
+            background-position: -150px 0px;
+          }
+
+          li:hover{
+            background-color: #49a4db;
+            box-shadow:0 0 4px #99bce2;
+          }
+          li.active{
+            background-color: #49a4db;
+            box-shadow:0 0 4px #99bce2;
+          }
+          .text:hover,.text.active{
+            background-image: url('/public/images/photoedit/wenzi-active.png');
+          }
+          .draw:hover,.draw.active{
+            background-position: -30px -30px;
+          }
+          .square:hover,.square.active{
+            background-position: -180px -30px;
+          }
+          .circle:hover,.circle.active{
+            background-position: -210px -30px;
+          }
+          .line:hover,.line.active{
+            background-position: -150px -30px;
+          }
+          .normal {
+            border-radius: 50%;
+          }
+
+          .active {
+            border-radius: 50%;
+          }
+        }
+        .edit-photo-tools-right{
+          box-sizing: border-box;
+          width: 40px;
+          position: relative;
+          display: inline-block;
+          label.color{
+            width: 16px;
+            height: 16px;
+            display: block;
+            margin: 0 5px;
+            margin-top: 5px;
+            cursor: pointer;
+          }
+          label.stroke{
+            display: block;
+            margin: 0 5px;
+            margin-top: 5px;
+            cursor: pointer;
+            background-color: #000;
+          }
+          label.rotate{
+            cursor: pointer;
+            display: block;
+            height: 30px;
+            width: 30px;
+            margin: 20px auto;
+            background-size: contain;
+            background-image: url('/public/images/photoedit/zuoxuan.png');
+          }
+        }
+
+        .edit-photo-scale{
+          span{
+            font-size: 25px;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            &:hover{
+              color: $primary;
+            }
+            -moz-user-select: none;
+            -webkit-user-select: none;
+          }
+        }
+      }
+    }
+    .file-info-progress {
+      height: 4px;
+      background-color: $chat-bg-color;
+      border-radius: 2px;
+      position: absolute;
+      bottom: 0px;
+      left: 0;
+      right: 0;
+      .file-info-progress-bar {
+        width: 0;
+        height: 4px;
+        background-color: $success;
+        border-radius: 2px;
+      }
+    }
+    .file-button.upload-success{
+      width: 100%;
+      height: 64px;
+    }
+    .file-button {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 14px 20px;
+      box-sizing: border-box;
+      .ctn-tips{
+        flex: 1;
+        position: relative;
+        padding: 18px 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        .text{
+          color: $primary;
+          cursor: pointer;
+        }
+        .moretips{
+          position: absolute;
+          top: -108px;
+          background: rgba(0,0,0,0.87);
+          border-radius: 4px;
+          color: white;
+          width: 520px;
+          padding: 13px 20px 10px 20px;
+          ol{
+            padding: 0 20px;
+            li{
+              list-style:initial;
+            }
+          }
+          .close{
+            color: white;
+            top: 0;
+            right: 0;
+            .dxicon{
+              font-style: 10px;
+              color: rgba(255,255,255, 0.69);
+            }
+          }
+          .arrow{
+
+            position: absolute;
+            bottom: -13px;
+            left: 40px;
+            .dxicon{
+              color:rgba(0,0,0,0.87);
+              font-size:17px;
+            }
+          }
+        }
+      }
+      .image-thumb-btns{
+        vertical-align: middle;
+        font-size: 0;
+        &:before{
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 0;
+          width: 0;
+          height: 100%;
+        }
+        .thumb-divider{
+          display: inline-block;
+          height: 2px;
+          border-bottom: 1px solid #eee;
+          width: 60px;
+          margin: 0 5px;
+        }
+        i{
+          font-size: 18px;
+          cursor: pointer;
+          &:hover{
+            color: $primary;
+          }
+        }
+      }
+      .image-tools-btns{
+        vertical-align: middle;
+        position: relative;
+        .tools-divider{
+          display: inline-block;
+          height: 24px;
+          border-bottom: 1px solid rgba(0,0,0,0.1);
+          width: 2px;
+          margin: 0 14px;
+        }
+        i{
+          font-size: 24px;
+          margin-left: 14px;
+          cursor: pointer;
+          &:hover{
+            color: $primary;
+          }
+        }
+        .file-button-cancel {
+          background: #FFFFFF;
+          border: 1px solid rgba(0,0,0,0.38);
+          border-radius: 2px;
+          height: 20px;
+          width: 34px;
+          font-size: 12px;
+          color: rgba(0,0,0,0.54);
+          letter-spacing: 0;
+          line-height: 18px;
+          padding: 2px;
+          cursor: pointer;
+        }
+        .tools-panel{
+          position: absolute;
+          top: 40px;
+          width: 350px;
+          height: 46px;
+          box-sizing: border-box;
+          background: #FFFFFF;
+          box-shadow: 0 2px 8px 0 rgba(0,0,0,0.24);
+          border-radius: 4px;
+          padding: 8px 0;
+          .tools-panel-brush{
+            display: inline-block;
+            div{
+              height: 24px;
+              width: 24px;
+              display: inline-block;
+              margin-left: 14px;
+              text-align: center;
+              vertical-align: middle;
+              cursor: pointer;
+              &:hover{
+                span{
+                  background: rgba(0,0,0,0.54);
+                }
+              }
+              span{
+                background: rgba(0,0,0,0.24);
+                &.active{
+                  background: rgba(0,0,0,0.54);
+                }
+              }
+              .small-brush{
+                border-radius: 50%;
+                width: 4px;
+                height: 4px;
+                display: inline-block;
+              }
+              .normal-brush{
+                border-radius: 50%;
+                width: 8px;
+                height: 8px;
+                display: inline-block;
+              }
+              .big-brush{
+                border-radius: 50%;
+                width: 12px;
+                height: 12px;
+                display: inline-block;
+              }
+            }
+          }
+          .tools-panel-color{
+            display: inline-block;
+            .color{
+              border: 1px solid rgba(0,0,0,0.10);
+              border-radius: 2px;
+              height: 16px;
+              width: 16px;
+              display: inline-block;
+              margin-right: 8px;
+              cursor: pointer;
+              &.active{
+                height: 22px;
+                width: 22px;
+              }
+              &:hover{
+                height: 22px;
+                width: 22px;
+              }
+              &.red{
+                background: #FF3440;
+              }
+              &.yellow{
+                background: #FFCF50;
+              }
+              &.green{
+                background: #00A344;
+              }
+              &.blue{
+                background: #0DA9D6;
+              }
+              &.grey{
+                background: #999999;
+              }
+              &.black{
+                background: #000000;
+              }
+              &.white{
+                background: #FFFFFF;
+              }
+            }
+          }
+        }
+      }
+      .ctn-btns{
+        text-align: center;
+        button {
+          width: 88px;
+          height: 36px;
+          padding: 8px 0;
+        }
+      }
+
+
+      &.upload-success {
+        width: 100%;
+        height: 56px;
+        margin: 10px auto 0 auto;
+      }
+    }
+    .file-button--pc {
+      justify-content: flex-end;
+    }
+  }
+}
