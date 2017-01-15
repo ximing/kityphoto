@@ -145,5 +145,9 @@ export default function (ei) {
     rotateCommand.queryEnabled = function () {
 
     };
+    rotateCommand.undo = function(){
+    }
+    rotateCommand.redo = function(){}
+    
     ei.commands['changeRotate'] = rotateCommand;
 }

@@ -30,7 +30,9 @@ export default function (ei) {
                     rgba[3] += imageData.data[i * 4 + 3];
                 }
                 rect.fill(new kity.Color(`rgba(${rgba[0]/length},${rgba[1]/length} ,${rgba[2]/length},${rgba[3]/length})`));
-                ei.execCommand('addShape', rect);
+                // ei.execCommand('addShape', rect);
+                //TODO 是不是 要emit contentChange？目前没有
+                ei.masaikeContainer.addShape(rect);
             }
         },
         dragEnd(e) {

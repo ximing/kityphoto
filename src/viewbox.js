@@ -47,8 +47,15 @@ export default function () {
         paper.setViewBox(0, 0, originWidth, originHeight);
         that.initViewBox = viewBox;
         let image = new kity.Image(that.dataURI, originWidth, originHeight);
+        that.masaikeContainer = new kity.Group();
+        that.opverContainer = new kity.Group();
         that.innerContainer = new kity.Group().pipe(function () {
             this.addShape(image);
+            this.addShape(that.masaikeContainer);
+            this.addShape(that.opverContainer);
+        });
+        that.innerContainer.addEventListener('keydown',()=>{
+            console.log('fdsafdsfdsfsafdsa')
         });
         that.rotate = 0;
         that.translate = [0,0];
@@ -93,6 +100,25 @@ export default function () {
         that.dataURI = dataURI;
     };
     reader.readAsDataURL(this.blob);
-    this.addClipMark = function () {
+    
+    this.showMasaikeContainer = ()=>{
+        if(this.masaikeContainer){
+            $(this.masaikeContainer.node).show();
+        }
+    }
+    this.hideMasaikeContainer = ()=>{
+        if(this.masaikeContainer){
+            $(this.masaikeContainer.node).hide();
+        }
+    }
+    this.showOpverContainer =()=>{
+        if(this.opverContainer){
+            $(this.opverContainer.node).show();
+        }
+    }
+    this.hideOpverContainer = ()=>{
+        if(this.opverContainer){
+            $(this.opverContainer.node).hide();
+        }
     }
 }

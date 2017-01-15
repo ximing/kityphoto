@@ -5,23 +5,22 @@
 import Command from '../lib/command.js'
 import event from '../lib/event.js';
 
-export default function (ei) {
+export default function(ei) {
     let drawCommand = new Command(ei);
 
-    drawCommand.execute = function (node) {
-        ei.innerContainer.addShape(node);
+    drawCommand.execute = function(node) {
+        ei.opverContainer.addShape(node);
+        ei.undoManager.add(() => {
+            if (ei.opverContainer.getShapeById(node.getId())) {
+                ei.opverContainer.removeShape(node);
+            }
+        }, () => {
+            if (!ei.opverContainer.getShapeById(node.getId())) {
+                ei.opverContainer.addShape(node);
+            }
+        });
         event.emit('contentChange');
         return node;
     };
-
-    drawCommand.undo = function (node) {
-        ei.innerContainer.removeShape(node);
-    };
-
-    drawCommand.redo = function (node) {
-        ei.innerContainer.addShape(node);
-        return node;
-    };
-
     ei.commands['addShape'] = drawCommand;
 }

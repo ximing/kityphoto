@@ -6,12 +6,14 @@
 import commands from './commands.js';
 import viewbox from './viewbox.js';
 import modules from './modules.js';
-import color from './style/color';
-import stroke from './style/stroke';
-import font from './style/font';
+// import color from './style/color';
+// import stroke from './style/stroke';
+// import font from './style/font';
+import style from './style.js';
 import select from './select';
 import event from './lib/event';
 import mouse from './lib/jquery-mousewheel';
+import UndoManager from './undo-manager.js';
 import coordinateConvert from './lib/coordinate-convert.js';
 import dataURLtoBlob from './lib/canvas-to-blob';
 let $ = require('jquery');
@@ -48,15 +50,14 @@ export default class KityPhoto {
     }
 
     init() {
-        $('head').append('<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />');
+        // $('head').append('<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />');
         //this.$container.html(`<div class="ei-left-opver"></div><div class=""></div><div></div>`)
         this.$container.css('text-align', 'center');
+        this.undoManager = new UndoManager();    
         commands.apply(this);
         viewbox.apply(this);
         modules.apply(this);
-        color.apply(this);
-        stroke.apply(this);
-        font.apply(this);
+        style.apply(this);
         select.apply(this);
         coordinateConvert.apply(this);
     }

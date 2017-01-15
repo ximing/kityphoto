@@ -32,6 +32,7 @@ export default function (ei) {
                     this.setColor(ei.selectColor);
                 }));
             };
+            path.addEventListener('keydown',(e)=>{console.log(e)})
             ei.execCommand('addShape', path);
         },
         dragMove(currentPosition) {

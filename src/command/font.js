@@ -5,18 +5,29 @@
 import Command from '../lib/command';
 import event from '../lib/event.js';
 
-export default function (ei) {
+export default function(ei) {
     let colorCommand = new Command(ei);
     colorCommand.execute = function(size) {
-        ei.changeFontSize(size);
-        event.emit('contentChange');
-
+        if (!isNaN(Number(size))) {
+            if (ei.selectNode) {
+                ei.selectNode.changeSize(size);
+            }
+            event.emit('contentChange');
+            let node = Object.assign({}, ei.selectNode);
+            let currentFont = ei.fontSize;
+            ei.undoManager.add(() => {
+                node.changeSize(currentFont);
+            }, () => {
+                node.changeSize(size);
+            });
+            ei.fontSize = size;
+        }
         return size;
     };
-    colorCommand.queryState = function () {
+    colorCommand.queryState = function() {
 
     };
-    colorCommand.queryEnabled = function () {
+    colorCommand.queryEnabled = function() {
 
     };
     ei.commands['fontSize'] = colorCommand;
