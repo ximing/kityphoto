@@ -37,14 +37,16 @@ var UndoManager = function() {
         /*
         Add a command to the queue.
         */
-        add: function(command) {
+        add: function(...arg) {
             if (isExecuting) {
                 return this;
             }
-            if(Object.prototype.toString.call(command).slice(8, -1) === 'Funtion'){
+            let command = arg[0];
+                            console.log('--',arg[0],arg[1])
+            if(Object.prototype.toString.call(command).slice(8, -1) === 'Function'){
                 command = {
-                    undo:arguments[0],
-                    redo:arguments[1]
+                    undo:arg[0],
+                    redo:arg[1]
                 }
             }
             commands.splice(index + 1, commands.length - index);

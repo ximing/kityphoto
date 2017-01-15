@@ -36,7 +36,7 @@ export default function (ei) {
             ei.execCommand('addShape', path);
         },
         dragMove(currentPosition) {
-            console.log(currentPosition);
+            // console.log(currentPosition);
             //let currentPosition = e.getPosition();
             d.lineTo(currentPosition.x, currentPosition.y);
         },

@@ -137,7 +137,7 @@ export default class WrapContainer extends Component {
             <div className="wrap_inner">
                 <div className="main">
                     <div className="upload-file-image-preview">
-                        <div id="upload-file-image-preview-paper">
+                        <div id="upload-file-image-preview-paper" style={{outline: "none"}} tabIndex="1">
 
                         </div>
                         <div className={btnClassname}>

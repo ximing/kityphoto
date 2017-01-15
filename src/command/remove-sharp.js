@@ -11,11 +11,11 @@ export default function(ei) {
     removeShapeCommand.execute = function(node) {
         ei.opverContainer.removeShape(node);
         ei.undoManager.add(() => {
-            if (!ei.opverContainer.getShapeById(node.getId())) {
+            if (ei.getShape(ei.opverContainer, node).length === 0) {
                 ei.opverContainer.addShape(node);
             }
         }, () => {
-             if (ei.opverContainer.getShapeById(node.getId())) {
+             if (ei.getShape(ei.opverContainer, node).length > 0) {
                 ei.opverContainer.removeShape(node);
             }
         });

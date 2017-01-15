@@ -13,11 +13,13 @@ import style from './style.js';
 import select from './select';
 import event from './lib/event';
 import mouse from './lib/jquery-mousewheel';
+import hotkeys from './lib/hotkeys';
 import UndoManager from './undo-manager.js';
 import coordinateConvert from './lib/coordinate-convert.js';
 import dataURLtoBlob from './lib/canvas-to-blob';
 let $ = require('jquery');
 mouse($);
+hotkeys($)
 let defultOpt = {
     renderTo: '#container',
     thumb: ''
@@ -53,49 +55,109 @@ export default class KityPhoto {
         // $('head').append('<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />');
         //this.$container.html(`<div class="ei-left-opver"></div><div class=""></div><div></div>`)
         this.$container.css('text-align', 'center');
-        this.undoManager = new UndoManager();    
+        this.undoManager = new UndoManager();
+        this.eventBind();
         commands.apply(this);
         viewbox.apply(this);
         modules.apply(this);
         style.apply(this);
         select.apply(this);
         coordinateConvert.apply(this);
+
     }
 
+    eventBind() {
+        this.$container.on('keydown', (e) => {
+            if (e.keyCode === 8) {
+                //删除监听
+                if (!!this.selectNode) {
+                    console.log('delete from hotkeys');
+                    this.execCommand('removeShape', this.selectNode);
+                }
+            }
+        });
+        //快捷键绑定
+        $(document).bind('keydown.ctrl_z', () => {
+            console.log('undo');
+            this.undoManager.undo()
+        });
+        $(document).bind('keydown.ctrl_y', () => {
+            console.log('redo');
+            this.undoManager.redo();
+        });
+
+    }
+
+    removeEvent() {
+        this.$container.off('keydown');
+        $(document).unbind('keydown.ctrl_z');
+        $(document).unbind('keydown.ctrl_y');
+    }
     getPaperViewBox() {
-        let {top, left, width, height} = this.$container.find('svg')[0].getBoundingClientRect();
-        return {top, left, width, height};
+        let {
+            top,
+            left,
+            width,
+            height
+        } = this.$container.find('svg')[0].getBoundingClientRect();
+        return {
+            top,
+            left,
+            width,
+            height
+        };
     }
 
     getContainerViewBox() {
-        let {top, left, width, height} = this.$container[0].getBoundingClientRect();
-        return {top, left, width, height};
+        let {
+            top,
+            left,
+            width,
+            height
+        } = this.$container[0].getBoundingClientRect();
+        return {
+            top,
+            left,
+            width,
+            height
+        };
     }
 
     inPaper(x, y) {
-        let {top, left, width, height} = this.getPaperViewBox();
+        let {
+            top,
+            left,
+            width,
+            height
+        } = this.getPaperViewBox();
         return x < width + left && y < top + height;
     }
 
-    getViewBox(){
-        let {width, height} = this.originalImage;
+    getViewBox() {
+        let {
+            width,
+            height
+        } = this.originalImage;
         let viewbox = {}
         if (this.rotate === 90) {
             viewbox.x = -height;
             viewbox.y = 0;
             viewbox.width = height;
             viewbox.height = width;
-        } else if (this.rotate === 270) {
+        }
+        else if (this.rotate === 270) {
             viewbox.x = 0;
             viewbox.y = -height;
             viewbox.width = height;
             viewbox.height = width;
-        } else if (this.rotate === 180) {
+        }
+        else if (this.rotate === 180) {
             viewbox.x = -width;
             viewbox.y = -height;
             viewbox.width = width;
             viewbox.height = height;
-        } else {
+        }
+        else {
             viewbox.x = 0;
             viewbox.y = 0;
             viewbox.width = width;
@@ -104,7 +166,7 @@ export default class KityPhoto {
         return viewbox;
     }
 
-    getCurrentViewBox(){
+    getCurrentViewBox() {
         return this.paper.getViewBox();
     }
 
@@ -133,10 +195,12 @@ export default class KityPhoto {
         // svg 含有 &nbsp; 符号导出报错 Entity 'nbsp' not defined
         svgXml = svgXml.replace(/&nbsp;/g, '&#xa0;');
 
-        return new Blob([svgXml], {type: 'image/svg+xml'});
+        return new Blob([svgXml], {
+            type: 'image/svg+xml'
+        });
     }
 
-    exportCanvas(viewbox){
+    exportCanvas(viewbox) {
         let url = DomURL.createObjectURL(this.exportBlob());
         let canvas = document.createElement('canvas');
         viewbox = viewbox || this.getViewBox();
@@ -148,41 +212,43 @@ export default class KityPhoto {
     }
 
     exportCurrentBlob() {
-        this.clearDragNode();
-        this.clearSelectNode();
-        let svgXml = this.paper.container.innerHTML;
+            this.clearDragNode();
+            this.clearSelectNode();
+            let svgXml = this.paper.container.innerHTML;
 
-        // let svgContainer = document.createElement('div');
-        // svgContainer.innerHTML = svgXml;
-        // let svgDom = svgContainer.querySelector('svg');
-        // svgContainer = document.createElement('div');
-        // svgContainer.appendChild(svgDom);
-        //
-        // svgXml = svgContainer.innerHTML;
+            // let svgContainer = document.createElement('div');
+            // svgContainer.innerHTML = svgXml;
+            // let svgDom = svgContainer.querySelector('svg');
+            // svgContainer = document.createElement('div');
+            // svgContainer.appendChild(svgDom);
+            //
+            // svgXml = svgContainer.innerHTML;
 
 
-        let $svg = $(svgXml).filter('svg');
-        let iamge = $svg.find('g > g > image');
-        $svg.find('g > g').empty().append(iamge);
-        svgXml = $('<div></div>').append($svg).html();
+            let $svg = $(svgXml).filter('svg');
+            let iamge = $svg.find('g > g > image');
+            $svg.find('g > g').empty().append(iamge);
+            svgXml = $('<div></div>').append($svg).html();
 
-        // Dummy IE
-        svgXml = svgXml.replace(' xmlns="http://www.w3.org/2000/svg" xmlns:NS1="" NS1:ns1:xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:NS2="" NS2:xmlns:ns1=""', '');
+            // Dummy IE
+            svgXml = svgXml.replace(' xmlns="http://www.w3.org/2000/svg" xmlns:NS1="" NS1:ns1:xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:NS2="" NS2:xmlns:ns1=""', '');
 
-        // svg 含有 &nbsp; 符号导出报错 Entity 'nbsp' not defined
-        svgXml = svgXml.replace(/&nbsp;/g, '&#xa0;');
-        return new Blob([svgXml], {type: 'image/svg+xml'});
-    }
-    //导出 当前 画布上面 可视范围内的图片
-    exportCurrentCanvas(viewbox){
+            // svg 含有 &nbsp; 符号导出报错 Entity 'nbsp' not defined
+            svgXml = svgXml.replace(/&nbsp;/g, '&#xa0;');
+            return new Blob([svgXml], {
+                type: 'image/svg+xml'
+            });
+        }
+        //导出 当前 画布上面 可视范围内的图片
+    exportCurrentCanvas(viewbox) {
         let url = DomURL.createObjectURL(this.exportCurrentBlob());
         viewbox = viewbox || this.getCurrentViewBox();
-        return new Promise(function (res, rej) {
+        return new Promise(function(res, rej) {
             try {
                 let img = new Image();
                 img.width = viewbox.width;
                 img.height = viewbox.height;
-                img.onload = function () {
+                img.onload = function() {
                     let canvas = document.createElement('canvas');
                     canvas.width = viewbox.width;
                     canvas.height = viewbox.height;
@@ -193,12 +259,13 @@ export default class KityPhoto {
                 };
                 img.src = url;
                 img.crossOrigin = '';
-                img.onerror = function (err) {
-                    console.log('img onerror',err,url);
+                img.onerror = function(err) {
+                    console.log('img onerror', err, url);
                     rej(err);
                 };
                 // rej(dataURLtoBlob(url))
-            } catch (err) {
+            }
+            catch (err) {
                 console.log(err);
                 rej(err);
             }
@@ -208,12 +275,12 @@ export default class KityPhoto {
     exportPng() {
         let url = DomURL.createObjectURL(this.exportBlob());
         let viewbox = this.getViewBox();
-        return new Promise(function (res, rej) {
+        return new Promise(function(res, rej) {
             try {
                 let img = new Image();
                 img.width = viewbox.width;
                 img.height = viewbox.height;
-                img.onload = function () {
+                img.onload = function() {
                     let canvas = document.createElement('canvas');
                     canvas.width = viewbox.width;
                     canvas.height = viewbox.height;
@@ -224,12 +291,13 @@ export default class KityPhoto {
                 };
                 img.src = url;
                 img.crossOrigin = '';
-                img.onerror = function (err) {
-                    console.log('img onerror',err,url);
+                img.onerror = function(err) {
+                    console.log('img onerror', err, url);
                     rej(err);
                 };
                 // rej(dataURLtoBlob(url))
-            } catch (err) {
+            }
+            catch (err) {
                 console.log(err);
                 rej(err);
             }
@@ -237,8 +305,12 @@ export default class KityPhoto {
     }
 
     convertCoordinate(x, y) {
-        let {width} = this.paper.getViewBox();
-        let {width:paperWidth} = this.getPaperViewBox();
+        let {
+            width
+        } = this.paper.getViewBox();
+        let {
+            width: paperWidth
+        } = this.getPaperViewBox();
         let scale = width / paperWidth;
         return {
             x: scale * x,
@@ -247,7 +319,12 @@ export default class KityPhoto {
     }
 
     isPointInPaper(x, y) {
-        let {top, left, width, height} = this.getPaperViewBox();
+        let {
+            top,
+            left,
+            width,
+            height
+        } = this.getPaperViewBox();
         return x >= left && x <= left + width && y <= top + height && y >= top;
     }
 
@@ -258,13 +335,19 @@ export default class KityPhoto {
     addDragNode(node) {
         this.dragNode = node;
     }
+    
+    getShape(container,node){
+        return $(container.getShapeNode()).find(`#${node.getId()}`);
+    }
 
     destory() {
         this.paper.off(this.DRAG_START_EVENT);
+        //移除监听事件
+        this.removeEvent();
         $(window).off(this.DRAG_END_EVENT, this.endDrag);
         this.paper.clear();
         this.paper = null;
-        if(this.thumbPaper){
+        if (this.thumbPaper) {
             this.thumbPaper.off(this.DRAG_START_EVENT);
             this.thumbPaper.off(this.DRAG_MOVE_EVENT);
             this.thumbPaper.clear();
