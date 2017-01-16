@@ -15,7 +15,6 @@ export default function (ei) {
             scale = Math.max(scale + ei.scale, (ei.initScale || 40));
         }
         if (scale === ei.scale) return;
-        console.log('...', scale);
         let {x, y} = ei.initViewBox;
         let {height, width} = ei.paper.getViewBox();
         let newViewBoxHeight = height * ei.scale / scale,

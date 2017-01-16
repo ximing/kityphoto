@@ -49,9 +49,9 @@ export default class WrapContainer extends Component {
         }
         //xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297784369.jpeg');
          //xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297784312.png');
-        xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783376.jpeg');
-        // xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783302.jpeg');
-        // xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783036.jpeg');
+        //xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783376.jpeg');
+         xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783302.jpg');
+        //xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783036.png');
         xhr.responseType = 'blob';
         xhr.send();
     }

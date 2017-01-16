@@ -54,9 +54,6 @@ export default function () {
             this.addShape(that.masaikeContainer);
             this.addShape(that.opverContainer);
         });
-        that.innerContainer.addEventListener('keydown',()=>{
-            console.log('fdsafdsfdsfsafdsa')
-        });
         that.rotate = 0;
         that.translate = [0,0];
         that.paper.addShape(that.innerContainer);
