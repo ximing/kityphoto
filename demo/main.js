@@ -47,9 +47,9 @@ export default class WrapContainer extends Component {
                 })
             }
         }
-        xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297784369.jpeg');
-        // xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297784312.jpeg');
-        // xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783376.jpeg');
+        //xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297784369.jpeg');
+         //xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297784312.png');
+        xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783376.jpeg');
         // xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783302.jpeg');
         // xhr.open('GET', 'http://mss.ximing.ren/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1484297783036.jpeg');
         xhr.responseType = 'blob';
@@ -94,6 +94,10 @@ export default class WrapContainer extends Component {
     changeRoutate() {
         this.kp.execCommand('changeRotate', 90);
     };
+    
+    startClip(){
+        this.kp.execCommand('startClip');
+    }
 
     changeEditorStroke(stroke) {
         return () => {
@@ -152,7 +156,7 @@ export default class WrapContainer extends Component {
                                 <i className="dxicon dxicon-image-text" onClick={this.changeEditorAction('text')}/>
                                 <i className="dxicon dxicon-image-masaike" onClick={this.changeEditorAction('mosaic')}/>
                                 <i className="dxicon dxicon-image-xuanzhuan" onClick={this.changeRoutate.bind(this)}/>
-                                <i className="dxicon dxicon-image-jiancai"/>
+                                <i className="dxicon dxicon-image-jiancai" onClick={this.startClip.bind(this)}/>
                                 <span className="tools-divider"> </span>
                                 <span className="file-button-cancel"
                                       onClick={this.removePhotoEditor.bind(this)}>复原</span>

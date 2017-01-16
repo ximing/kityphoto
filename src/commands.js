@@ -11,6 +11,7 @@ import opver from './command/opver';
 import scale from './command/scale';
 import viewbox from './command/viewbox';
 import rotate from './command/rotate';
+import startClip from './command/start-clip.js';
 export default function () {
     addSharp(this);
     removeSharp(this);
@@ -21,6 +22,7 @@ export default function () {
     scale(this);
     viewbox(this);
     rotate(this);
+    startClip(this);
     this.execCommand = (command, ...args)=> {
         console.log(command,args);
         this.commands[command].execute.apply(this,args);
