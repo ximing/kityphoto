@@ -19,30 +19,28 @@ module.exports = {
     output: {
         filename: 'index.js',
         path: resolve(__dirname, 'dist'),
-        publicPath: '/dist'
+        publicPath: '/'
     },
     devtool: 'cheap-eval-source-map',
 
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
+        contentBase: [path.join(__dirname, "views"),path.join(__dirname, "dist")],
         compress: false,
         port: 9876,
         host: "0.0.0.0",
         hot: true,
         inline: true,
-        publicPath: "/dist/",
+        publicPath: "/",
         historyApiFallback: {
             rewrites: [{
                 from: /^\/$/,
-                to: '/views/index.html'
-            }, {
-                from: /^\/subpage/,
-                to: '/views/subpage.html'
+                to: '/index.html'
             }, {
                 from: /./,
-                to: '/views/404.html'
+                to: '/404.html'
             }]
-        }
+        },
+        watchContentBase:true
     },
     performance: {
         hints: false

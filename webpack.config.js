@@ -25,7 +25,7 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
 
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
+        contentBase: [path.join(__dirname, "html"),path.join(__dirname, "dist")],
         compress: true,
         port: parseInt(process.env.PORT) ||9876,
         host: "0.0.0.0",
@@ -35,9 +35,10 @@ module.exports = {
         historyApiFallback: {
             rewrites: [{
                 from: /^\/$/,
-                to: '/views/index.html'
+                to: '/html/index.html'
             }]
-        }
+        },
+        watchContentBase:true
     },
     performance: {
         hints: false
