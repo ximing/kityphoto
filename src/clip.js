@@ -2,6 +2,7 @@
  * Created by yeanzhi on 16/12/4.
  */
 import event from './lib/event';
+import ClicpOpverPanel from './lib/clip-opver-panel.js';
 
 export default function(){
     
@@ -18,5 +19,15 @@ export default function(){
     this.applyClipMark = ()=>{
         
     }
+    
+    this.clicpOpverPanel = new ClicpOpverPanel(this.$container[0],()=>{
+        if(this.getClipRange){
+            
+        }
+    },()=>{
+        if(this.getClipRange){
+            
+        }
+    });
     
 }
