@@ -54,15 +54,21 @@ export default function () {
             this.addShape(that.masaikeContainer);
             this.addShape(that.opverContainer);
         });
+        that.innerContainer.addEventListener('keydown',()=>{
+            console.log('fdsafdsfdsfsafdsa')
+        });
         that.rotate = 0;
         that.translate = [0,0];
         that.paper.addShape(that.innerContainer);
+        
         that.$container.off('mousewheel');
         that.$container.on('mousewheel', function(event) {
             //滚动条向下的时候是正数，滚动条向上的时候是负数 还可能是0没啥变化
+            event.preventDefault();
             let scale = scrollSkip(event.deltaY);
             that.execCommand('changeScale', scale);
         });
+        
         that.selectOpver = 'draw';
         that.selectNode = null;
         that.dragNode = null;
