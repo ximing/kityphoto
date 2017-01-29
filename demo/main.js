@@ -151,7 +151,7 @@ export default class WrapContainer extends Component {
                                 <i className="dxicon dxicon-image-fangda" onClick={this.changeScale(10)}/>
                             </div>
                             <div className="image-tools-btns">
-                                <i className="dxicon dxicon-image-jiantou"/>
+                                <i className="dxicon dxicon-image-jiantou" onClick={this.changeEditorAction('line')}/>
                                 <i className="dxicon dxicon-image-huabi" onClick={this.changeEditorAction('draw')}/>
                                 <i className="dxicon dxicon-image-text" onClick={this.changeEditorAction('text')}/>
                                 <i className="dxicon dxicon-image-masaike" onClick={this.changeEditorAction('mosaic')}/>

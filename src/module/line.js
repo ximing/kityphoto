@@ -8,6 +8,11 @@ import borderFrame from '../lib/two-point-border-frame'
 export default function (ei) {
     let startPosition,
         polyline;
+        $(ei.paper.resourceNode).append(`
+            <marker id="arrow" markerWidth="10" markerHeight="10" refx="0" refy="3" orient="auto" markerUnits="strokeWidth"> 
+                <path d="M0,0 L0,6 L9,3 z" fill="#f00"/> 
+            </marker>
+        `);
     ei.modules['line'] = {
         dragStart(_startPosition) {
             startPosition = _startPosition;
@@ -15,10 +20,12 @@ export default function (ei) {
                 this.addPoint(new kity.ShapePoint(startPosition.x, startPosition.y));
                 this.addPoint(new kity.ShapePoint(startPosition.x + 1, startPosition.y + 1));
             });
+        
             polyline.setStyle({
                 'stroke': ei.selectColor,
                 'stroke-width': ei.selectStroke
             });
+            polyline.node.setAttribute('marker-end','url(#arrow)');
             polyline.changeColor = function (color) {
                 this.setStyle({
                     stroke: color,
